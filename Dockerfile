@@ -1,8 +1,14 @@
-FROM monetas/base-ot-dev
+FROM ubuntu:14.04
 
 MAINTAINER Martin Hamrle "martin.hamrle@monetas.net"
 
-RUN apt-get install -y --no-install-recommends p7zip-full automake autoconf libtool && apt-get autoremove
+RUN apt-get install -y --no-install-recommends software-properties-common && \
+    add-apt-repository ppa:monetas/opentxs && \
+    apt-get update && \
+    apt-get install -y --no-install-recommends p7zip-full automake autoconf \
+        libtool cmake make curl git swig3.0 protobuf-compiler && \
+    ln -s /usr/bin/swig3.0 /usr/bin/swig && \
+    apt-get autoremove
 
 # Install android ndk
 ENV ANDROID_NDK_VERSION r10c
